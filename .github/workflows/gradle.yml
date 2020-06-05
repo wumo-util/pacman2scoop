@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-gradle-
       - uses: DeLaGuardo/setup-graalvm@3
         with:
-          graalvm-version: '20.1.0.java11' // GraalVM version, no pattern syntax available atm.
+          graalvm-version: '20.1.0.java11'
       - run: java -version
 #      - name: Set up JDK
 #        uses: actions/setup-java@v1
