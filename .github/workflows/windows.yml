@@ -36,4 +36,5 @@ jobs:
           tag: ${{ github.ref }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/native-image/pacman2scoop.exe
+          asset_name: pacman2scoop-win.exe
           overwrite: true
