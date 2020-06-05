@@ -1,0 +1,44 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+
+jobs:
+  build:
+    if: startsWith(github.event.head_commit.message, 'release plz')
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew packageDist
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v1-release
+        if: success()
+        with:
+          tag: ${{ github.ref }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/dist/*
+          file_glob: true
+          overwrite: true
