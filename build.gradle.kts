@@ -5,6 +5,7 @@ plugins {
   id("com.github.johnrengelman.shadow") version "5.2.0"
   id("org.beryx.runtime") version "1.8.5"
   id("com.google.osdetector") version "1.6.2"
+  id("org.mikeneck.graalvm-native-image") version "0.5.0"
 }
 
 group = "com.github.wumo"
@@ -12,14 +13,13 @@ version = "0.0.1"
 
 repositories {
   mavenCentral()
-  mavenLocal()
   maven(url = "https://jitpack.io")
 }
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
   implementation("com.github.wumo:common-utils:1.0.5")
-  implementation("com.github.wumo:http-stack:1.0.1")
+  implementation("com.github.wumo:http-stack:1.0.2")
 }
 
 application {
@@ -65,4 +65,18 @@ runtime {
         installerOptions + listOf("--win-per-user-install", "--win-dir-chooser", "--win-menu", "--win-shortcut")
     }
   }
+}
+
+nativeImage {
+  println(System.getenv("JAVA_HOME"))
+  setGraalVmHome(System.getenv("JAVA_HOME"))
+  setMainClass("com.github.wumo.MainKt")
+  setExecutableName("pacman2scoop")
+  arguments(
+    "--no-fallback",
+    "--enable-all-security-services",
+    "--initialize-at-run-time=com.example.runtime",
+    "--report-unsupported-elements-at-runtime",
+    "--allow-incomplete-classpath"
+  )
 }

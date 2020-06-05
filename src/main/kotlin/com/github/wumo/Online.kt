@@ -6,7 +6,6 @@ import com.github.wumo.http.HttpClient.initClient
 import com.github.wumo.http.OkHttpUtils.url
 import com.github.wumo.http.OkHttpUtils.get
 import kotlinx.coroutines.runBlocking
-import okhttp3.logging.HttpLoggingInterceptor
 
 object Online {
   val baseUrl = url("https", "packages.msys2.org", "package")
