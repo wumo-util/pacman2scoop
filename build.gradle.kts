@@ -49,6 +49,7 @@ tasks {
 
 runtime {
   addOptions("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
+  addModules("java.logging")
   
   jpackage {
     imageName = "pacman2scoop"
