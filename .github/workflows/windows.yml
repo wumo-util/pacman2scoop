@@ -7,16 +7,10 @@ on:
   push:
     tags:
       - 'v*'
-    branches:
-      - master
 
 jobs:
   build:
-    if: startsWith(github.event.head_commit.message, 'test plz')
-    strategy:
-      matrix:
-        os: [windows-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -30,21 +24,16 @@ jobs:
         with:
           graalvm-version: '20.1.0.java11'
       - run: java -version
-      #      - name: Set up JDK
-      #        uses: actions/setup-java@v1
-      #        with:
-      #          java-version: 14
       - name: Build in msvc
         shell: cmd
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           ./gradlew nativeImage
-#      - name: Upload binaries to release
-#        uses: svenstaro/upload-release-action@v1-release
-#        if: success()
-#        with:
-#          tag: ${{ github.ref }}
-#          repo_token: ${{ secrets.GITHUB_TOKEN }}
-#          file: build/dist/*
-#          file_glob: true
-#          overwrite: true
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v1-release
+        if: success()
+        with:
+          tag: ${{ github.ref }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/native-image/pacman2scoop.exe
+          overwrite: true

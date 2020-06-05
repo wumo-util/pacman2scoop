@@ -10,11 +10,7 @@ on:
 
 jobs:
   build:
-    if: startsWith(github.event.head_commit.message, 'test plz')
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -28,20 +24,15 @@ jobs:
         with:
           graalvm-version: '20.1.0.java11'
       - run: java -version
-      #      - name: Set up JDK
-      #        uses: actions/setup-java@v1
-      #        with:
-      #          java-version: 14
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew nativeImage
-#      - name: Upload binaries to release
-#        uses: svenstaro/upload-release-action@v1-release
-#        if: success()
-#        with:
-#          tag: ${{ github.ref }}
-#          repo_token: ${{ secrets.GITHUB_TOKEN }}
-#          file: build/dist/*
-#          file_glob: true
-#          overwrite: true
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v1-release
+        if: success()
+        with:
+          tag: ${{ github.ref }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/native-image/pacman2scoop
+          overwrite: true
