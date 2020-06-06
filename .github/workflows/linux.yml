@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-linux:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -36,6 +36,6 @@ jobs:
         with:
           tag: ${{ github.ref }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/native-image/pacman2scoop
-          asset_name: pacman2scoop-linux
+          file: build/graalvm/*
+          file_glob: true
           overwrite: true
