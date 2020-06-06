@@ -28,7 +28,7 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         env:
-          GRAALVM_HOME: ${{ JAVA_HOME }}
+          GRAALVM_HOME: ${{ env.JAVA_HOME }}
         run: ./gradlew nativeImage
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release

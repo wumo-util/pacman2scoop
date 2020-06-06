@@ -27,7 +27,7 @@ jobs:
       - name: Build in msvc
         shell: cmd
         env:
-          GRAALVM_HOME: ${{ JAVA_HOME }}
+          GRAALVM_HOME: ${{ env.JAVA_HOME }}
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           ./gradlew nativeImage
