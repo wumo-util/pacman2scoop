@@ -2,10 +2,9 @@ plugins {
   kotlin("jvm") version "1.3.72"
   application
   kotlin("plugin.serialization") version "1.3.72"
-  id("com.github.johnrengelman.shadow") version "5.2.0"
   id("org.beryx.runtime") version "1.8.5"
   id("com.google.osdetector") version "1.6.2"
-  id("com.github.wumo.graalvm") version "0.0.1"
+  id("com.github.wumo.graalvm") version "0.0.3"
 }
 
 group = "com.github.wumo"
@@ -32,10 +31,6 @@ tasks {
   }
   compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
-  }
-  
-  jpackage {
-  
   }
   
   register<Zip>("packageDist") {
@@ -73,7 +68,6 @@ graalvm {
   arguments = listOf(
     "--no-fallback",
     "--enable-all-security-services",
-    "--initialize-at-run-time=com.example.runtime",
     "--report-unsupported-elements-at-runtime",
     "--allow-incomplete-classpath"
   )
