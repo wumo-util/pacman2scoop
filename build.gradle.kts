@@ -4,7 +4,7 @@ plugins {
   kotlin("plugin.serialization") version "1.3.72"
   id("org.beryx.runtime") version "1.8.5"
   id("com.google.osdetector") version "1.6.2"
-  id("com.github.wumo.graalvm") version "0.0.3"
+  id("com.github.wumo.graalvm") version "0.0.4"
 }
 
 group = "com.github.wumo"
