@@ -1,4 +1,4 @@
-package com.github.wumo
+package com.github.wumo.pacman2scoop
 
 import com.github.wumo.http.HttpClient.client
 import com.github.wumo.http.HttpClient.closeClient
@@ -22,8 +22,6 @@ object Online {
     }
     
     return runBlocking {
-      initClient()
-      
       val packages = mutableMapOf<String, Package>()
       while(queue.isNotEmpty()) {
         val p = queue.removeLast()
@@ -45,9 +43,6 @@ object Online {
             queue.add(d)
         }
       }
-      
-      closeClient()
-      
       val uniquePackagesByFileUrl = mutableMapOf<String, Package>()
       packages.values.forEach { uniquePackagesByFileUrl[it.url] = it }
       uniquePackagesByFileUrl.values.sortedBy { it.url }

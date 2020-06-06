@@ -1,0 +1,18 @@
+[
+  {
+    "name": "com.github.luben.zstd.ZstdInputStream",
+    "fields" : [
+      { "name" : "stream", "allowWrite" : true },
+      { "name" : "dstPos" },
+      { "name" : "srcPos" },
+      { "name" : "srcSize" },
+      { "name" : "needRead" },
+      { "name" : "finalize" },
+      { "name" : "src" },
+      { "name" : "srcBuffSize" },
+      { "name" : "isContinuous" },
+      { "name" : "frameFinished" },
+      { "name" : "isClosed" }
+    ]
+  }
+]

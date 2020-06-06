@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.wumo"
-version = "0.0.1"
+version = "0.0.2"
 
 repositories {
   mavenCentral()
@@ -19,10 +19,17 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   implementation("com.github.wumo:common-utils:1.0.5")
   implementation("com.github.wumo:http-stack:1.0.2")
+  implementation("org.apache.commons:commons-compress:1.20")
+  implementation("com.github.luben:zstd-jni:1.4.4-7")
+  implementation("org.tukaani:xz:1.8")
+  implementation("commons-codec:commons-codec:1.14")
+  
+  testImplementation("junit:junit:4.13")
+  testImplementation(kotlin("test-junit"))
 }
 
 application {
-  mainClassName = "com.github.wumo.MainKt"
+  mainClassName = "com.github.wumo.pacman2scoop.MainKt"
 }
 
 tasks {
@@ -64,11 +71,31 @@ runtime {
 
 graalvm {
   graalvmHome = System.getenv("GRAALVM_HOME")
-  mainClassName = "com.github.wumo.MainKt"
+  mainClassName = "com.github.wumo.pacman2scoop.MainKt"
+  val res = when(osdetector.os) {
+    "macos"   -> "darwin[.]x86_64"
+    "linux"   -> {
+      when(osdetector.arch) {
+        "x86_32" -> "linux/i386"
+        "x86_64" -> "linux/amd64"
+        else     -> error("Not supported ${osdetector.arch}")
+      }
+    }
+    "windows" -> {
+      when(osdetector.arch) {
+        "x86_32" -> "win/x86"
+        "x86_64" -> "win/amd64"
+        else     -> error("Not supported ${osdetector.arch}")
+      }
+    }
+    else      -> error("Not supported ${osdetector.os}")
+  }
   arguments = listOf(
     "--no-fallback",
     "--enable-all-security-services",
     "--report-unsupported-elements-at-runtime",
-    "--allow-incomplete-classpath"
+    "--allow-incomplete-classpath",
+    "-H:IncludeResources=$res/.*",
+    "-H:JNIConfigurationResources=graalvm-jni.json"
   )
 }

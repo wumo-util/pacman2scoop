@@ -1,4 +1,4 @@
-package com.github.wumo
+package com.github.wumo.pacman2scoop
 
 import com.github.wumo.process.ProcessHelper
 import java.nio.file.Paths
@@ -9,7 +9,10 @@ object Local {
   val shellCMD = "msys2_shell.cmd"
   
   fun searchMsy2(): String {
-    val file = Paths.get(defaultInstallation, shellCMD).toFile()
+    val file = Paths.get(
+      defaultInstallation,
+      shellCMD
+    ).toFile()
     if(file.exists()) {
       return file.absolutePath
     }
