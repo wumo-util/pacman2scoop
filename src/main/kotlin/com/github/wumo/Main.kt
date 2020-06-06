@@ -5,6 +5,7 @@ import java.io.File
 
 fun main(args: Array<String>) {
   try {
+    
     val requiredPackages = Online.dependenciesOf(args.toList())
     
     val content = buildString {
