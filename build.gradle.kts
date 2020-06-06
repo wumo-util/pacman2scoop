@@ -68,8 +68,8 @@ runtime {
 }
 
 nativeImage {
-  println(System.getenv("JAVA_HOME"))
-  setGraalVmHome(System.getenv("JAVA_HOME"))
+  println(System.getenv("GRAALVM_HOME"))
+  setGraalVmHome(System.getenv("GRAALVM_HOME"))
   setMainClass("com.github.wumo.MainKt")
   setExecutableName("pacman2scoop")
   arguments(
