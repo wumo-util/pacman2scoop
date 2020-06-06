@@ -73,7 +73,7 @@ graalvm {
   graalvmHome = System.getenv("GRAALVM_HOME")
   mainClassName = "com.github.wumo.pacman2scoop.MainKt"
   val res = when(osdetector.os) {
-    "macos"   -> "darwin[.]x86_64"
+    "osx"   -> "darwin[.]x86_64"
     "linux"   -> {
       when(osdetector.arch) {
         "x86_32" -> "linux/i386"
