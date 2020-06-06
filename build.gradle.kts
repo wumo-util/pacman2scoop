@@ -5,7 +5,7 @@ plugins {
   id("com.github.johnrengelman.shadow") version "5.2.0"
   id("org.beryx.runtime") version "1.8.5"
   id("com.google.osdetector") version "1.6.2"
-  id("org.mikeneck.graalvm-native-image") version "0.5.0"
+  id("com.github.wumo.graalvm") version "0.0.1"
 }
 
 group = "com.github.wumo"
@@ -67,12 +67,10 @@ runtime {
   }
 }
 
-nativeImage {
-  println(System.getenv("GRAALVM_HOME"))
-  setGraalVmHome(System.getenv("GRAALVM_HOME"))
-  setMainClass("com.github.wumo.MainKt")
-  setExecutableName("pacman2scoop")
-  arguments(
+graalvm {
+  graalvmHome = System.getenv("GRAALVM_HOME")
+  mainClassName = "com.github.wumo.MainKt"
+  arguments = listOf(
     "--no-fallback",
     "--enable-all-security-services",
     "--initialize-at-run-time=com.example.runtime",
