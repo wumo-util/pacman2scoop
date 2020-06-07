@@ -73,6 +73,7 @@ runtime {
 
 graalvm {
   graalvmHome = System.getenv("GRAALVM_HOME")
+  executableName = "$name-${osdetector.classifier}"
   mainClassName = "com.github.wumo.pacman2scoop.MainKt"
   val res = when(osdetector.os) {
     "osx"     -> "darwin[.]x86_64"
