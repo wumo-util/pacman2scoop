@@ -27,8 +27,7 @@ object Local {
   }
   
   fun String.exec(cmd: String): String {
-    val (result, exitCode) = ProcessHelper.eval("\"$this\" -defterm -no-start -full-path -here -c \"$cmd\"")
-    check(exitCode == 0) { result }
+    val result = ProcessHelper.eval("\"$this\" -defterm -no-start -full-path -here -c \"$cmd\"")
     return result
   }
 }

@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
-  implementation("com.github.wumo:common-utils:1.0.5")
+  implementation("com.github.wumo:common-utils:1.0.7")
   implementation("com.github.wumo:http-stack:1.0.2")
   implementation("org.apache.commons:commons-compress:1.20")
   implementation("com.github.luben:zstd-jni:1.4.4-7")
@@ -34,10 +34,12 @@ application {
 
 tasks {
   compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
   }
   compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
   }
   
   register<Zip>("packageDist") {
@@ -73,7 +75,7 @@ graalvm {
   graalvmHome = System.getenv("GRAALVM_HOME")
   mainClassName = "com.github.wumo.pacman2scoop.MainKt"
   val res = when(osdetector.os) {
-    "osx"   -> "darwin[.]x86_64"
+    "osx"     -> "darwin[.]x86_64"
     "linux"   -> {
       when(osdetector.arch) {
         "x86_32" -> "linux/i386"

@@ -49,14 +49,14 @@ object Download {
       requiredPackages.forEach { pkg->
         val u = pkg.url.toHttpUrl()
         val fileName = u.pathSegments.last()
-        val file = Paths.get(downloadDir, fileName).toFile()
+        val file = File(fileName)
         if(!file.exists() || file.sha256() != pkg.sha256) {
           println("downloading ${pkg.url}")
           client.download(file, pkg.url)
           check(file.sha256() == pkg.sha256) { "$file checksum failed" }
         }
         println("decompress $fileName")
-        decompress(file.toString(), downloadDir)
+        decompress(fileName, downloadDir)
       }
     }
   }
