@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
-  implementation("com.github.wumo:common-utils:1.0.7")
+  implementation("com.github.wumo:common-utils:1.0.8")
   implementation("com.github.wumo:http-stack:1.0.2")
   implementation("org.apache.commons:commons-compress:1.20")
   implementation("com.github.luben:zstd-jni:1.4.4-7")
